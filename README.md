@@ -1,8 +1,8 @@
 # DC Boost Board
 
-**Project:** DC Boost Board — programmable boost converter interface for hydrogen fuel cell vehicle
+**Project:** DC Boost Board — programmable boost converter interface for a hydrogen fuel cell vehicle
 
-**Purpose:** This board takes the vehicle's boostable DC bus (nominally 24 V from a hydrogen fuel cell) and provides a controllable boosted output (typical targets: 48 V or 57 V) for the motor controller and traction motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), MCUs for control and CAN connectivity, and a simple local UI (OLED + single push button) to let technicians or drivers adjust the boost voltage on-the-fly.
+**Purpose:** This board takes the vehicle's boostable DC bus (nominally 24 V from a hydrogen fuel cell) and provides a controllable boosted output (typical target: 48 V) for the motor controller and traction motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, and a simple local UI (OLED + single push button) to let technicians or drivers adjust or observe the boost behaviour.
 
 ---
 
@@ -11,35 +11,26 @@
 1. [Key features](#key-features)
 2. [Block diagram & functional overview](#block-diagram--functional-overview)
 3. [Hardware details](#hardware-details)
-
-   * [Synchronous boost controller (LM5123)](#synchronous-boost-controller-lm5123)
-   * [Input / output sensors](#input--output-sensors)
-   * [Power protection — TPS2623 eFuses and ILM pin](#power-protection---tps2623-efuses-and-ilm-pin)
-   * [MCU & firmware interface](#mcu--firmware-interface)
-   * [OLED + single-button UI behavior](#oled--single-button-ui-behavior)
-   * [Status LEDs](#status-leds)
-   * [Connectors and pinout](#connectors-and-pinout)
-4. [Electrical design notes & part selection guidance](#electrical-design-notes--part-selection-guidance)
-5. [CAN interface specification](#can-interface-specification)
-6. [Firmware architecture & APIs](#firmware-architecture--apis)
-7. [Calibration, testing and validation procedures](#calibration-testing-and-validation-procedures)
-8. [Safety & handling](#safety--handling)
-9. [Assembly & building the firmware](#assembly--building-the-firmware)
-10. [Troubleshooting guide](#troubleshooting-guide)
+4. [FreeRTOS firmware overview (what is actually running on-board)](#freertos-firmware-overview-what-is-actually-running-on-board)
+5. [Electrical design notes & part selection guidance](#electrical-design-notes--part-selection-guidance)
+6. [Calibration, testing and validation procedures](#calibration-testing-and-validation-procedures)
+7. [Safety & handling](#safety--handling)
+8. [Assembly & building the firmware](#assembly--building-the-firmware)
+9. [Troubleshooting guide](#troubleshooting-guide)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 ---
 
 ## Key features
 
 * **LM5123** synchronous boost controller driving external MOSFET(s) for high-efficiency boost operation.
-* Programmable **dynamic voltage tuning** (default boost targets: 48 V and 57 V) controlled by MCU.
-* Input: nominal **24 V hydrogen fuel cell**. Output adjustable, with option to reduce output to **25 V or 30 V** or fully disable boost.
-* **Input / output voltage sensing** and **current sensing** on both input and output rails.
-* **TPS2623 eFuses** for controlled power delivery and overcurrent protection.
-* **ILM (current limit) monitoring** line available to MCU for fast shutdown or derating.
-* **CAN bus** connectivity — reads vehicle RUN state and other telemetry; publishes board status and telemetry.
-* **OLED + single push-button** local UI to change voltage setpoint with single-button UX.
-* **5 MCU-controlled LEDs** for status indicators (user-configurable meanings).
+* Programmable **dynamic voltage tuning** (default target used in firmware: 48 V) controlled by MCU and exposed on a local UI.
+* Input: nominal **24 V hydrogen fuel cell**. Output adjustable; board supports disabling the boost stage when input is below a safe threshold.
+* **Input / output voltage sensing** and **current sensing** using ADCs and filtering. Firmware computes averaged values before publishing them to the display and logs.
+* **TPS2623 eFuses** (or equivalent) for controlled power delivery and overcurrent protection; an ILM/fault signal is wired to the MCU to allow fast disable of the boost controller.
+* **Local UI**: small OLED display (SSD1306) + a single push button for interaction. The display shows input/output voltages, currents and a setpoint readout.
+* **FreeRTOS-based firmware** with multiple tasks handling ADC acquisition, DAC control for the tracking/virtual voltage (TRK) pin, LED/status handling, screen updates, and boot/default behaviour.
 
 ---
 
@@ -49,10 +40,9 @@
 
 High-level flow:
 
-1. Fuel cell (24 V nominal) → input bulk filtering → TPS2623 eFuses → inrush / precharge path → LM5123 boost stage → output filter → motor controller / traction inverter.
-2. MCU monitors input V/I, output V/I, ILM and other flags. MCU adjusts LM5123 via a digital interface (DAC or PWM-to-analog tuning) to set the target output.
-3. MCU communicates over CAN to receive car state (RUN/COAST/BRAKE) and may change boost behaviour accordingly (e.g., lower setpoint or disable boost while coasting to save hydrogen).
-4. Local UI (OLED + single-button) allows technicians to manually adjust output voltage when allowed.
+1. Fuel cell (24 V nominal) → input bulk filtering → eFuse(s) → inrush / precharge path → LM5123 boost stage → output filter → motor controller / traction inverter.
+2. MCU monitors VIN, VOUT, input/output currents, and ILM/fault inputs. MCU controls the LM5123 enable and a DAC-tracked reference (the TRK pin) that sets the controller target.
+3. Local UI (OLED + button) renders telemetry and allows simple interactions.
 
 ---
 
@@ -60,166 +50,68 @@ High-level flow:
 
 ### Synchronous boost controller — LM5123
 
-The board uses an LM5123 controller as the main switching regulator. Important design notes:
+* LM5123 is used as the switching controller. It drives external MOSFETs; MOSFET choice must respect Vds (recommend ≥ 80 V) and have low Rds(on) while balancing gate-charge losses.
+* The EN/ENABLE pin from the boost controller is driven by the MCU to allow safe startup/shutdown sequences (the code waits until input voltage is above a small threshold, then toggles ENABLE with a startup delay).
+* The TRK (tracking) reference to the controller is driven by the MCU DAC to set the desired output indirectly — firmware converts the `SET_VOLT` value to an appropriate DAC code.
 
-* LM5123 is configured as a synchronous boost (external high-side/low-side MOSFETs). Ensure MOSFET selection follows the LM5123 gate drive and Vds ratings for the expected VIN (24 V) and VOUT (up to 57 V plus margin).
-* Compensation network, inductor selection, and output capacitors are chosen to ensure stability at the switching frequency used. Typical switching frequency and inductor values were selected during design verification — see `docs/power_design_notes.md` for the full loop-analysis and component choices.
-* The LM5123's EN/SHUTDOWN pin is connected to the MCU for enable/disable control.
-* The LM5123 can be tuned dynamically: the MCU changes the control reference (via DAC or filtered PWM) to change the target output voltage.
+### Sensing
 
-### Input / output sensors
+* Voltage sensing is implemented with resistor dividers feeding ADCs. `VOLT_TRANSFER_IN` and `VOLT_TRANSFER_OUT` constants in firmware indicate divider ratios.
+* Current sensing is performed by shunt-based sensors (ADC + conditioning). Firmware performs an averaging buffer (50 samples) for both input and output current measurements before using or printing the values.
+* ADC sampling is done via DMA for efficiency (see `HAL_ADC_Start_DMA` usage in firmware).
 
-* **Voltage sensing:** resistor divider networks on VIN and VOUT feed ADC channels on the MCU. Divider values chosen to keep ADC inputs within range (documented in `hardware/` schematic).
-* **Current sensing:** differential current sensors (shunt + amplifier or dedicated IC) measure input and output currents. The ILM pin reports fast overcurrent events (e.g., from a dedicated comparator or the eFuse) to the MCU.
-* ADC channels for sensors must be calibrated. See [Calibration](#calibration-testing-and-validation-procedures).
+### Protection & power path
 
-### Power protection — TPS2623 eFuses and ILM pin
+* eFuses control inrush and protect the input path. An ILM/fault signal is connected to the MCU so it can immediately disable the LM5123 if a fast fault is detected.
+* Output capacitors and layout should be sized for ripple and energy storage. Place low-ESR ceramics close to the MOSFETs and bulk electrolytics for energy.
 
-* TPS2623 devices provide programmable current limits and fault reporting. They protect against sustained overcurrent and latch or auto-retry depending on config.
-* The ILM pin is available to the MCU for rapid reaction to overcurrent or over-temperature. ILM is routed such that the MCU can immediately disable the LM5123 via the EN pin.
+---
 
-### MCU & firmware interface
+## FreeRTOS firmware overview (what is actually running on-board)
 
-* MCU handles: dynamic voltage tuning, reading sensors via ADC, safety monitoring, CAN communications, local UI handling, LED status control, and eFuse interactions.
-* The firmware exposes a clean module separation:`
+This repository's firmware is FreeRTOS-based — the current, tested application uses a set of cooperative/independent tasks implemented in `app_freertos.c`. The important runtime behaviours implemented in firmware are **actual code** (do not treat these as pseudocode):
 
-  * `power_control` (LM5123 interactions, setpoint handling)
-  * `sensing` (ADC reads, filtering, calibration)
-  * `safety` (fault handling, eFuse control, ILM response)
-  * `can_comm` (message packing/parsing, heartbeat)
-  * `ui` (OLED + button handling and menu logic)
+### Tasks (as present in `app_freertos.c`)
 
-**Important:** Boot behavior: MCU should set LM5123 to a safe default (output disabled) until sensors and CAN states are validated.
+* **DefaultTask** (`StartDefaultTask`)
 
-### OLED + single-button UI behavior
+  * Initializes the USB device stack (CDC/USB) on startup.
+  * Implements the boot enable logic for the boost controller: it monitors the input voltage and only toggles `ENABLE` (GPIO) after input voltage is present and a startup delay has passed. It also includes a simple button-based increment of `SET_VOLT` (note: the hardware button is connected to the BOOT0 pin in the dev build as a convenience during flashing).
 
-This board uses a single push button and a small OLED to make adjustments. The UI behaviour implemented is:
+* **adcConvTask** (`StartAdcConv`)
 
-1. **Short press** — move cursor between options.
-2. **Long press (3 seconds)** on the currently selected option — select that option.
-3. **Menu flow**:
+  * Starts ADC DMA channels and continuously computes averaged current measurements (50-sample moving buffer), computes VIN and VOUT from ADC readings, and computes a simple efficiency estimate.
+  * Prints telemetry via `printf` for debugging (USB CDC or semihosting depending on build).
 
-   * Press once to bring up menu with two options: `UP` and `DOWN`.
-   * If `UP` is selected and long-pressed (3s), the board enters increase-voltage mode: each short press increments the setpoint by `+1 V`.
-   * If `DOWN` is selected and long-pressed (3s), the board enters decrease-voltage mode: each short press decrements the setpoint by `-1 V`.
-   * **Timeout:** if no button press for **10 seconds**, the menu fades/disappears and the UI returns to normal telemetry display.
+* **ScreenPrintTask** (`startScreenPrint`)
 
-This UX is intentionally minimal to let a single button do both selection and adjustment.
+  * Drives an SSD1306 OLED (driver code `ssd1306.c`) and draws telemetry on-screen at ~10 Hz. When a `lock_state` flag is active the screen shows an alarm state; otherwise it shows SET_VOLT, IN/OUT voltages, currents and a simple efficiency value.
 
-### Status LEDs
+* **TRKPinTask** (`StartTRKPin`)
 
-* **5 MCU-controlled LEDs** are exposed on the board. Default meanings we used in development:
+  * Converts `SET_VOLT` to a DAC value and writes it to a DAC channel to act as the boost controller's tracking reference. Runs at 1 ms intervals for smooth tracking.
 
-  1. Power present (input ok)
-  2. Boost enabled
-  3. Fault (latched)
-  4. CAN activity / heartbeat
-  5. User-defined (e.g., charge mode)
+* **StatusLED** (`StartStatusLED`)
 
-You can remap the LEDs in firmware easily.
+  * Handles multiple PWM-driven LEDs via TIM peripherals. The task updates LED PWM compare registers to indicate enable state, regulation state (within ±1 V of setpoint), and other status indicators. Also reads the ENABLE GPIO pin to update LED states.
 
-### Connectors and pinout
+> The code uses HAL timers for PWM generation and starts them at boot (`HAL_TIM_PWM_Start` calls in `MX_FREERTOS_Init`).
 
-* **Main power input** — high-current connector (24 V fuel cell in). See `hardware/schematic.pdf` for footprint and pin mapping.
-* **Boost output** — high-current connector to motor controller / load.
-* **CAN_H / CAN_L** — isolated CAN bus connector to the vehicle network.
-* **I/O header** — includes: MCU debug (SWD), ILM, eFuse fault signals, GPIOs, and I2C/SPI (for expansion).
-* **OLED header** — I2C or SPI header for OLED (depending on chosen display)
-* **Button** — mechanical pushbutton routed to MCU GPIO with external pull-down/pull-up as in schematics.
+### Important variables & behaviour
 
-(Exact connector pinout is documented in `hardware/` directory and in the schematic PDF.)
+* `SET_VOLT` (float) — the present voltage setpoint (default 48 V in code sample).
+* `voltage_reached` (uint8_t) — flag used to avoid repeating the startup delay sequence when input voltage falls and rises.
+* ADC buffering constants and conversion factors (e.g. `VOLT_MCU`, `VOLT_TRANSFER_IN`, `VOLT_TRANSFER_OUT`, `VOLT_TO_CURR_UNI`) are defined in `app_freertos.c` and must match hardware design.
+* `boost_data`, `boost_data2`, `boost_data3` structs — hold telemetry numbers formatted to your FDCAN packing scheme in your codebase. The ADC task fills these fields for display/logging.
 
 ---
 
 ## Electrical design notes & part selection guidance
 
-* **MOSFETs** should be chosen with Vds rating comfortably above the maximum expected Vout (recommend ≥ 80 V to provide margin). Rds(on) should be chosen for low conduction losses while considering gate charge for switching losses.
-* **Inductor** selection: the LM5123 design guide recommends a specific inductance for a given switching frequency. Keep the inductor saturation current rating higher than the maximum expected peak inductor current (account for duty cycle and ripple). See `docs/power_design_notes.md` for the loop analysis and suggested part numbers.
-* **Output caps**: low ESR electrolytic and ceramic bulk caps sized for ripple and energy storage. Place ceramics close to MOSFETs for switching transients.
-* **Gate driving**: ensure gate resistors and snubbers limit ringing; follow layout best practices.
-* **Layout**: keep the power loop (VIN → MOSFETs → inductor → output cap → return) short and with wide copper. Place current shunt and sensing amplifiers away from high dv/dt nodes, and use Kelvin sense where needed.
-
----
-
-## CAN interface specification
-
-The CAN interface is the primary vehicle integration point. We use a simple message set for telemetry and control. The IDs and payloads below are recommended — they should be configurable in firmware.
-
-**Example messages**
-
-* `0x180` — **BoostControlCmd** (Tx: vehicle → Boost board)
-
-  * Byte 0: Command type (0x01 = set voltage, 0x02 = enable, 0x03 = disable)
-  * Byte 1: Voltage high byte (signed or unsigned depending on encoding)
-  * Byte 2: Voltage low byte (LSB, 0.1 V units recommended)
-  * Bytes 3-7: reserved / checksum
-
-* `0x280` — **BoostStatus** (Tx: Boost board → vehicle)
-
-  * Byte 0: State flags (bit0: enabled, bit1: fault, bit2: can_ok, ...)
-  * Byte 1: Output voltage MSB (0.1 V units)
-  * Byte 2: Output voltage LSB
-  * Byte 3: Output current MSB (0.1 A units)
-  * Byte 4: Output current LSB
-  * Bytes 5-7: reserved
-
-* `0x2A0` — **Telemetry** (periodic)
-
-  * Packed VIN, IIN, VOUT, IOUT, temperature, fault codes.
-
-**Heartbeat & safety**
-
-* MCU must monitor CAN heartbeat from vehicle's master at a configured timeout (e.g., 250 ms). If heartbeat lost for a safety timeout (e.g., 500 ms–2000 ms), the board should move to a safe state (reduce setpoint to a safe limit or disable boost entirely), depending on vehicle integration rules.
-
----
-
-## Firmware architecture & APIs
-
-Suggested modular layout:
-
-```
-/src
-  /boot
-  /drivers
-    adc.c / adc.h
-    can.c / can.h
-    gpio.c / gpio.h
-    lm5123.c / lm5123.h
-    eFuse.c / eFuse.h
-    oled.c / oled.h
-    button.c / button.h
-  /app
-    power_control.c
-    sensing.c
-    safety.c
-    ui.c
-  main.c
-
-/docs
-  firmware_architecture.md
-```
-
-Key algorithms & behaviors:
-
-* **Voltage setpoint smoothing**: when switching setpoints (CAN or UI), ramp the reference smoothly to avoid step changes in duty cycle and large inrush currents.
-* **Current limiting**: perform closed-loop current limiting using ILM and the current sensors. If a fast overcurrent event occurs, immediately disable the LM5123 and report fault over CAN.
-* **Watchdog & fault escalation**: use hardware watchdog. On repeated faults, latch the board until cleared by CAN or a power-cycle.
-
-Example API calls (pseudo-C):
-
-```c
-// set voltage target in volts (integer)
-void power_control_set_voltage(int volts);
-
-// enable / disable boost
-void power_control_enable(bool en);
-
-// read telemetry struct
-telemetry_t telemetry = sensing_read_all();
-
-// send status
-can_send_boost_status(&telemetry);
-```
+* **MOSFETs**: Choose MOSFETs with a comfortable voltage margin (≥ 80 V) and low Rds(on). Gate-charge and switching losses become relevant at higher switching frequencies; balance on-resistance vs gate-charge according to your switching frequency.
+* **Inductor**: Follow LM5123 recommendations. Choose an inductor with a saturation current above expected peak inductor current, and appropriate DCR/inductance to meet ripple and thermal requirements.
+* **Capacitors**: Use a mix of low-ESR ceramics for decoupling and electrolytic/tantalum for bulk energy. Make sure voltage ratings exceed maximum output voltage with margin.
+* **Layout**: Keep the high-current power loop short and wide. Place sensing traces away from the switching node. Use Kelvin connections for current sensing if possible.
 
 ---
 
@@ -227,83 +119,72 @@ can_send_boost_status(&telemetry);
 
 ### ADC & sensor calibration
 
-1. Connect a calibrated bench supply and precision multimeter to VIN. Apply 12 V, 24 V and any other expected operating points.
-2. Record ADC raw codes vs measured voltages. Fit a linear calibration (slope & offset) and store in non-volatile memory.
-3. Repeat for current sensors using a programmable electronic load and accurate ammeter.
+1. Use a calibrated bench supply and precision multimeter. Apply known voltages to VIN/VOUT sense inputs to build a slope/offset calibration table for the ADC channels.
+2. For current sensors, use a programmable electronic load or a current source and an accurate ammeter to collect ADC codes vs measured current. Fit and store linear calibration values in NVM.
+3. Copy the calibration constants into `app_freertos.c` or a `calibration.h` used by the `sensing` routines.
 
 ### Functional tests
 
-* **Power-on smoke test**: With no load, enable the board and verify Vout ramps to the default safe setpoint (or stays disabled per config). Watch for smoke, overheating, or abnormal currents.
-* **Step-load test**: Apply increasing loads up to expected maximum. Verify current sensor responses, eFuse trips, and ILM behaviour.
-* **Transient & loop stability**: Apply step changes in load and verify voltage regulation and loop stability (oscillations, overshoot).
-
-### Integration tests with vehicle CAN
-
-* Verify CAN message reception and correct interpretation at multiple setpoints.
-* Validate safety timeouts for lost heartbeat.
+* **Power-on smoke test**: With no load, energize the input and observe that the board either holds the boost disabled or ramps to a safe default. Observe temperatures and any unusual currents.
+* **Step-load test**: Apply increasing loads and verify that current sensing, eFuse behaviour and ENABLE gating behave correctly.
+* **UI tests**: Verify OLED updates, the SET_VOLT increments via the designated button, and DAC-tracking behavior.
 
 ---
 
 ## Safety & handling
 
-* This board handles potentially hazardous voltages (24 V → up to 57 V and high currents). Work only in accordance with safe lab practices.
-* When testing: use proper PPE, fuses, and current-limited bench supplies where possible.
-* Ensure electrolytic capacitors are rated for the maximum Vout with margin.
+* The board manages potentially hazardous voltages and currents. Use PPE and current-limited supplies when bench-testing.
+* Ensure electrolytic capacitors are rated above maximum expected voltage.
+* When bringing up the power stage for the first time, use a series test resistor or electronic load with current limit to prevent destructive faults.
 
 ---
 
 ## Assembly & building the firmware
 
-1. Populate board according to `hardware/BOM.csv` and `hardware/schematic.pdf`.
-2. Connect SWD and flash the firmware via your chosen tool (e.g., STLink, or Atmel-ICE if the MCU is AVR). Bootloader / programmer steps are documented in `docs/flash_instructions.md`.
-3. Build system: use `Makefile` (or PlatformIO/CMake depending on repo). Example:
+1. Populate the board according to `hardware/BOM.csv` and `hardware/schematic.pdf`.
+2. The firmware included with the repo is FreeRTOS + STM32 HAL based (the provided `app_freertos.c` is authored for the STM32 HAL). Use your standard STM32 toolchain (STM32CubeIDE, Makefile, or your CI) to build.
+3. Typical workflow (example using STM32CubeIDE or a Makefile):
 
 ```bash
-# from repo root
+# build (example)
 make all
-make flash
-make monitor
+# flash with ST-Link (example command)
+st-flash write build/firmware.bin 0x8000000
 ```
 
-(Provide concrete toolchain & CPU target in `docs/`.)
+4. USB CDC is initialized by the `StartDefaultTask` — connect a serial terminal to observe `printf` telemetry if built with CDC support.
+
+5. The OLED driver used in firmware is the SSD1306 library (repository includes `ssd1306.c`/`.h`). Ensure the display wiring matches the configuration (I2C or SPI) used in `ssd1306_cfg.h`.
 
 ---
 
 ## Troubleshooting guide
 
-* **No output voltage**: Check EN pin state, check eFuse status, verify MOSFET gate driver supply, check bootloader sets safe default.
-* **Output voltage present but unstable**: Check compensation network, inductor saturation, output capacitor ESR, layout.
-* **eFuse tripping repeatedly**: Check for short on output, measure current spikes with oscilloscope, review inrush paths.
+* **No display output**: Verify I2C/SPI wiring and that `ssd1306_Init()` succeeds. Check `ssd1306_UpdateScreen()` calls and that the display has power.
+* **No DAC output / TRK pin not changing**: Verify the DAC peripheral (check `HAL_DAC_Start` and `HAL_DAC_SetValue`), and ensure `VOLT_MCU` constant matches the MCU reference.
+* **ENABLE not toggling / boost not starting**: Check `boost_data.in_volt` and the logic in `StartDefaultTask` that sets `ENABLE`. Use a multimeter to confirm the ENABLE GPIO state.
+* **Unexpected current readings**: Re-check shunt wiring, ADC input ranges, and conversion constants (`VOLT_TO_CURR_UNI`, `CURR_TRANSFERx`). Compare raw ADC codes to expected voltages.
 
 ---
 
 ## Contributing
 
-Contributions are welcome. Please follow these guidelines:
+If you want to contribute:
 
-1. Open an issue describing the feature or bug.
-2. Fork the repo and create a branch for your change.
-3. Add clear commit messages and unit tests for firmware where possible.
-4. Submit a pull request with a clear description and tests.
-
-Please follow the repository's coding style and document any hardware changes in the `hardware/` directory.
+1. Open an issue describing the change or bug.
+2. Fork the repository and create a feature branch.
+3. Keep firmware changes well-documented. Add unit tests where feasible and document hardware changes in `hardware/`.
 
 ---
 
-## Files & folders (suggested repository layout)
+## License
 
-```
-/ hardware/         # schematics, PCB, BOM
-/ docs/             # design notes, power calculations, testing procedures
-/ firmware/         # firmware sources and build system
-/ examples/         # sample CAN scripts and test logs
-/ tools/            # helper scripts (BOM parsers, calibration tools)
-/ README.md         # this file
-```
+Include your preferred license file (e.g., MIT, Apache-2.0). Add `LICENSE` in repository root.
 
 ---
 
+## Contact
 
----
+If you have questions about the design or want help integrating the board, open an issue or contact the maintainers listed in `MAINTAINERS.md`.
 
 *Last updated: November 14, 2025*
