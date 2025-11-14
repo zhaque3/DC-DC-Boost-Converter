@@ -26,8 +26,6 @@
 8. [Safety & handling](#safety--handling)
 9. [Assembly & building the firmware](#assembly--building-the-firmware)
 10. [Troubleshooting guide](#troubleshooting-guide)
-11. [Contributing](#contributing)
-12. [License](#license)
 
 ---
 
@@ -305,15 +303,6 @@ Please follow the repository's coding style and document any hardware changes in
 
 ---
 
-## License
-
-Include your preferred license file (e.g., MIT, Apache-2.0). Add `LICENSE` in repository root.
-
----
-
-## Contact
-
-If you have questions about the design or need help integrating it into your vehicle, open an issue or contact the maintainers listed in `MAINTAINERS.md`.
 
 ---
 
