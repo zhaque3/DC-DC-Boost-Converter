@@ -9,7 +9,7 @@
 ## Table of contents
 
 1. [Key features](#key-features)
-2. [Block diagram & functional overview](#block-diagram--functional-overview)
+2. [Functional overview](#block-diagram--functional-overview)
 3. [Hardware details](#hardware-details)
 4. [FreeRTOS firmware overview (what is actually running on-board)](#freertos-firmware-overview-what-is-actually-running-on-board)
 5. [Electrical design notes & part selection guidance](#electrical-design-notes--part-selection-guidance)
@@ -17,8 +17,6 @@
 7. [Safety & handling](#safety--handling)
 8. [Assembly & building the firmware](#assembly--building-the-firmware)
 9. [Troubleshooting guide](#troubleshooting-guide)
-10. [Contributing](#contributing)
-11. [License](#license)
 
 ---
 
@@ -167,24 +165,5 @@ st-flash write build/firmware.bin 0x8000000
 
 ---
 
-## Contributing
 
-If you want to contribute:
 
-1. Open an issue describing the change or bug.
-2. Fork the repository and create a feature branch.
-3. Keep firmware changes well-documented. Add unit tests where feasible and document hardware changes in `hardware/`.
-
----
-
-## License
-
-Include your preferred license file (e.g., MIT, Apache-2.0). Add `LICENSE` in repository root.
-
----
-
-## Contact
-
-If you have questions about the design or want help integrating the board, open an issue or contact the maintainers listed in `MAINTAINERS.md`.
-
-*Last updated: November 14, 2025*
