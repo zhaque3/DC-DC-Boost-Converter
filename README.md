@@ -32,9 +32,9 @@
 
 ---
 
-## Block diagram & functional overview
+## Functional overview
 
-(Place a schematic / block diagram image in the repository `docs/` and link here.)
+
 
 High-level flow:
 
