@@ -11,9 +11,6 @@
 1. [Key features](#key-features)
 2. [Hardware details](#hardware-details)
 3. [FreeRTOS firmware overview (what is actually running on-board)](#freertos-firmware-overview-what-is-actually-running-on-board)
-4. [Electrical design notes & part selection guidance](#electrical-design-notes--part-selection-guidance)
-5. [Calibration, testing and validation procedures](#calibration-testing-and-validation-procedures)
-6. [Safety & handling](#safety--handling)
 
 ---
 
