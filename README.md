@@ -64,7 +64,6 @@ The system is structured as a set of independent FreeRTOS tasks, each responsibl
   - Forces ENABLE low if input voltage falls below threshold and resets the startup sequence.
 - Handles a push-button input to increment the output voltage setpoint (`SET_VOLT`) with bounds checking based on input voltage.
 
----
 
 ### ADC Conversion Task (`StartAdcConv`)
 
@@ -78,7 +77,6 @@ The system is structured as a set of independent FreeRTOS tasks, each responsibl
 - Computes a real-time efficiency estimate using measured voltage and current values.
 - Publishes computed values into CAN data structures and prints debug telemetry over USB CDC.
 
----
 
 ### Screen Print Task (`startScreenPrint`)
 
@@ -90,14 +88,12 @@ The system is structured as a set of independent FreeRTOS tasks, each responsibl
   - Computed efficiency
 - When a fault or lock condition is received over CAN, the display switches to an alarm state.
   
----
 
 ### TRK Pin Control Task (`StartTRKPin`)
 
 - Controls the LM5123 TRK (tracking) pin using the on-chip DAC.
 - Converts `SET_VOLT` into a proportional DAC output corresponding to the desired boost output voltage.
 
----
 
 ### Status LED Task (`StartStatusLED`)
 
@@ -107,7 +103,6 @@ The system is structured as a set of independent FreeRTOS tasks, each responsibl
   - General system activity
 - Continuously monitors the ENABLE GPIO to synchronize LED states with actual hardware behavior.
 
----
 
 ## CAN Bus Communication
 
