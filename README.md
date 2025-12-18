@@ -2,7 +2,7 @@
 
 **Project:** DC Boost Board — programmable boost converter interface for a hydrogen fuel cell vehicle
 
-**Purpose:** This board takes the vehicle's boostable DC bus (nominally 24 V from a hydrogen fuel cell) and provides a controllable boosted output (typical target: 48 V) for the motor controller and traction motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, and a simple local UI (OLED + single push button) to let technicians or drivers adjust or observe the boost behaviour.
+**Purpose:** This board takes the vehicle's boostable DC bus (nominally 24 V from a hydrogen fuel cell) and provides a controllable boosted output (typical target: 48 V) for the motor controller and motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, and a simple local UI (OLED + single push button) to let technicians or drivers adjust or observe the boost behaviour.
 
 ---
 
