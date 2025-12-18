@@ -2,7 +2,7 @@
 
 **Project:** DC Boost Board — a programmable boost converter for the University of Alberta EcoCar 2025 Prototype Vehicle. The vehicle (Sally) won first place at the Shell Eco Marathon 2025 in the Hydrogen Fuel Cell Prototype Category. 
 
-**Purpose:** This board takes the vehicle's hydrogen fuel cell output voltage (nominally 24 V) and provides a controllable boosted output (typical target: 48 V) for the motor controller and motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, and a simple local UI (OLED + push buttons), and CAN bus communication with other boards on the vehicle and wireless base station.
+**Purpose:** This board takes the vehicle's hydrogen fuel cell output voltage (nominally 24 V) and provides a controllable boosted output (typical target: 48 V) for the motor controller and motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, a simple local UI (OLED + push buttons), and CAN bus communication with other boards on the vehicle and wireless base station.
 
 ---
 
