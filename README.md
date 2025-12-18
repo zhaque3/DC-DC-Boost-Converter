@@ -4,8 +4,10 @@
 
 **Purpose:** This board takes the vehicle's hydrogen fuel cell output voltage (nominally 24 V) and provides a controllable boosted output (typical target: 48 V) for the motor controller and motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, a simple local UI (OLED + push buttons), and CAN bus communication with other boards on the vehicle and wireless base station.
 
-![PXL_20250319_173355473 MP](https://github.com/user-attachments/assets/15bbcd5f-0c2e-4593-9463-0c970752a497)
-![PXL_20250319_173342682](https://github.com/user-attachments/assets/80acbdae-b218-47ad-b564-8269c8f016bd)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/15bbcd5f-0c2e-4593-9463-0c970752a497" width="350">
+  <img src="https://github.com/user-attachments/assets/80acbdae-b218-47ad-b564-8269c8f016bd" width="350">
+</p>
 
 
 ---
