@@ -2,7 +2,7 @@
 
 **Project:** DC Boost Board — a programmable boost converter for the University of Alberta EcoCar 2025 Prototype Vehicle. The vehicle (Sally) won first place at the Shell Eco Marathon 2025 in the Hydrogen Fuel Cell Prototype Category. 
 
-**Purpose:** This board takes the vehicle's hydrogen fuel cell output voltage (nominally 24V) and provides a controllable boosted output (typical target: 48 V) for the motor controller and motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, and a simple local UI (OLED + push buttons), and CAN bus communication with other boards on the vehicle and wireless base station.
+**Purpose:** This board takes the vehicle's hydrogen fuel cell output voltage (nominally 24 V) and provides a controllable boosted output (typical target: 48 V) for the motor controller and motor. It includes measurement (voltage/current sensing), safety/protection (eFuses and monitoring), an MCU running FreeRTOS for control and telemetry, and a simple local UI (OLED + push buttons), and CAN bus communication with other boards on the vehicle and wireless base station.
 
 ---
 
@@ -20,8 +20,8 @@
 ## Key features
 
 * **LM5123** synchronous boost controller driving external mosfets for high-efficiency boost operation.
-* Programmable **dynamic voltage tuning** controlled by MCU and local UI.
-* Input/Output: nominal **24 V **. The board is designed to output 48V but is capable of outputting 57. 
+* Programmable dynamic voltage tuning controlled by MCU and local UI.
+* Input/Output: nominal 24 V. The board is designed to output 48V but is capable of outputting 57. 
 * **Input / output voltage sensing** and **current sensing** using ADCs and filtering. Firmware computes averaged values before publishing them to the display and logs.
 * **TPS2623 eFuses** for controlled power delivery and overcurrent protection.
 * **Local UI**: small OLED display (SSD1306) + push buttons for interaction. The display shows input/output voltages, currents, and an effeciency score.
@@ -47,16 +47,14 @@
 ### Microcontroller
 
 * The board is built around an STM32G91KUE6 microcontroller, which serves as the central control, sensing, and communication unit for the boost system.
-* The MCU runs a FreeRTOS-based firmware architecture, allowing deterministic and concurrent handling of power control, sensing, UI updates, and CAN communication without blocking critical control paths.
+* The MCU runs a FreeRTOS-based firmware architecture, allowing concurrent handling of power control, sensing, UI updates, and CAN communication without blocking critical control paths.
 
 ---
 
 ## FreeRTOS firmware overview
 
-The firmware running on the DC Boost Board is **FreeRTOS-based** and implemented entirely in `app_freertos.c`.  
+The firmware running on the DC Boost Board is FreeRTOS based and implemented entirely in `app_freertos.c`.  
 The system is structured as a set of independent FreeRTOS tasks, each responsible for a specific functional domain: power control, sensing, user interface, and vehicle communication.
-
----
 
 ## Tasks (as implemented in `app_freertos.c`)
 
@@ -129,10 +127,3 @@ The system is structured as a set of independent FreeRTOS tasks, each responsibl
 - CAN messaging enables real-time monitoring by other PCB's on the vehicle and the wireless telemetry system.
 
 ---
-
-
-
----
-
-
-
