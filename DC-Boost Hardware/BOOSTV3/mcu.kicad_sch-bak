@@ -6,9 +6,9 @@
 	(paper "A3")
 	(title_block
 		(title "Microcontroller")
-		(rev "V2")
+		(rev "V1")
 		(company "EcoCar")
-		(comment 1 "Designed by:  Zeeshan Haque")
+		(comment 1 "Designed by: Nicholas semmens, Zeeshan Haque")
 	)
 	(lib_symbols
 		(symbol "+5V_1"
@@ -7697,7 +7697,7 @@
 	)
 	(text "        V_{UVLO(F)} = (R2 + R3)/(R1 + R2 + R3) * V_{IN(UV)}\nV_{OVLO(F)} = R3/(R1 + R2 + R3) * V_{IN(OV)}\n\nV_{UVLO,F} from datasheet\n\n"
 		(exclude_from_sim no)
-		(at 175.26 275.59 0)
+		(at 177.165 294.64 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7873,7 +7873,7 @@
 	)
 	(text "LDO requires voltage drop of at least 1.3V\nMake undervoltage condition ~5V to ensure 3.3V V_{out} "
 		(exclude_from_sim no)
-		(at 234.315 274.955 0)
+		(at 236.22 292.735 0)
 		(effects
 			(font
 				(size 1.27 1.27)

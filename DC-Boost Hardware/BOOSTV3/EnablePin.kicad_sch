@@ -2,10 +2,10 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid "a38a56f6-5b73-4309-9160-51c41502ff8e")
+	(uuid "381487f2-eb63-4bf2-a805-b7a2291168fb")
 	(paper "A4")
 	(title_block
-		(rev "V2")
+		(rev "V3")
 		(company "EcoCar")
 		(comment 1 "Designed by:  Zeeshan Haque")
 	)
@@ -681,193 +681,125 @@
 		)
 	)
 	(junction
-		(at 125.095 96.52)
+		(at 137.16 82.55)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "410518ec-c232-44ba-86e2-e4cd7728bca0")
+		(uuid "10e9542c-69fb-49f7-9cbd-b74c4dd69d55")
 	)
 	(wire
 		(pts
-			(xy 133.985 83.82) (xy 132.715 83.82)
+			(xy 137.16 74.93) (xy 137.16 82.55)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "0775a760-7ba3-4940-b281-3b70788d079a")
+		(uuid "1fc15970-5ba7-4f82-be2c-7a2101ada21f")
 	)
 	(wire
 		(pts
-			(xy 125.095 96.52) (xy 136.525 96.52)
+			(xy 146.05 69.85) (xy 144.78 69.85)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "2ee5ce36-f783-4957-8d5c-5e049b3f7daa")
+		(uuid "434aaafc-f604-47b8-afdc-ad8e5d9e8124")
 	)
 	(wire
 		(pts
-			(xy 97.79 96.52) (xy 125.095 96.52)
+			(xy 126.365 69.85) (xy 129.54 69.85)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "98eeef81-1802-4ad2-8d5b-9926ff6c2fb2")
+		(uuid "83a4d21a-ca66-4efe-a99d-8807c1443135")
 	)
 	(wire
 		(pts
-			(xy 133.985 81.915) (xy 133.985 83.82)
+			(xy 109.855 82.55) (xy 137.16 82.55)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9d4450c8-6bf7-41b8-b4ca-8808869c373a")
+		(uuid "96436327-e5dd-4e3b-b327-4e5b3dc9fba0")
 	)
 	(wire
 		(pts
-			(xy 161.925 96.52) (xy 144.145 96.52)
+			(xy 126.365 70.485) (xy 126.365 69.85)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a8848ad7-80b8-4a30-a3dd-81540ad3adef")
+		(uuid "a83c3f6e-aa9c-490f-8e59-e8a0da0c01aa")
 	)
 	(wire
 		(pts
-			(xy 114.3 84.455) (xy 114.3 83.82)
+			(xy 173.99 82.55) (xy 156.21 82.55)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "aaf1aed4-1407-458a-bf8a-8cc9c4d0b1f8")
+		(uuid "aaac3421-b180-45ca-9c3b-a8199c0b44d5")
 	)
 	(wire
 		(pts
-			(xy 125.095 88.9) (xy 125.095 96.52)
+			(xy 146.05 67.945) (xy 146.05 69.85)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "cfa40cd3-c229-4118-9602-d0a8398a0275")
+		(uuid "db9de26a-7737-4767-8c9a-ae9d4114f5d5")
 	)
 	(wire
 		(pts
-			(xy 114.3 83.82) (xy 117.475 83.82)
+			(xy 137.16 82.55) (xy 148.59 82.55)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "db68fbc1-f87c-42a0-9b80-eb6ca2da4f23")
+		(uuid "ece53ef0-e711-457e-aff0-99c2042bc492")
 	)
-	(hierarchical_label "TRK"
+	(hierarchical_label "Enable_Pin"
 		(shape output)
-		(at 161.925 96.52 0)
+		(at 173.99 82.55 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "3258d97c-c1fc-459d-908d-f32f2b26642c")
+		(uuid "634111e0-bce0-4b86-9b7e-0dbe952ac010")
 	)
-	(hierarchical_label "VOLT_TUNE_D{slash}A"
+	(hierarchical_label "Enable_Pin_MCU"
 		(shape input)
-		(at 97.79 96.52 180)
+		(at 109.855 82.55 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "fb6428bc-3c84-4438-af59-7a7b868e9e5e")
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 140.335 96.52 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "143f580a-cc51-41ad-b024-2a81b5de96f6")
-		(property "Reference" "R47"
-			(at 140.335 90.17 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10"
-			(at 140.335 92.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 140.335 98.298 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 140.335 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 140.335 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0d0fcb94-c72e-4233-b774-8b9c764214c2")
-		)
-		(pin "2"
-			(uuid "ff9a9bf3-65e3-48d8-8c11-3896fe9ca219")
-		)
-		(instances
-			(project "BOOSTV2"
-				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/83854842-4c14-4e3d-b9f8-9c4b216ba0c1"
-					(reference "R47")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "fe8337df-e021-486c-9dc7-d0be3d814790")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 114.3 84.455 0)
+		(at 126.365 70.485 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "26005a90-d4c0-4bf3-8131-7734bac600f8")
-		(property "Reference" "#PWR075"
-			(at 114.3 90.805 0)
+		(uuid "24d3d621-96dd-4384-b8bb-0f200c9c0931")
+		(property "Reference" "#PWR076"
+			(at 126.365 76.835 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -876,7 +808,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 114.3 88.9 0)
+			(at 126.365 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -884,7 +816,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 114.3 84.455 0)
+			(at 126.365 70.485 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -893,7 +825,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 114.3 84.455 0)
+			(at 126.365 70.485 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -902,7 +834,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 114.3 84.455 0)
+			(at 126.365 70.485 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -911,77 +843,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "538e9c5d-d4b2-42b4-aee1-46ba037c07aa")
+			(uuid "1ad5abd3-b49b-4238-a15b-636388714948")
 		)
 		(instances
 			(project "BOOSTV2"
-				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/83854842-4c14-4e3d-b9f8-9c4b216ba0c1"
-					(reference "#PWR075")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 133.985 81.915 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "46d16f4e-8f06-4df8-a5b1-9729419228de")
-		(property "Reference" "#PWR078"
-			(at 133.985 85.725 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 133.985 78.105 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 133.985 81.915 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 133.985 81.915 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 133.985 81.915 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "09f2424c-2d10-4fcd-9450-c2ef1d220fbd")
-		)
-		(instances
-			(project "BOOSTV2"
-				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/83854842-4c14-4e3d-b9f8-9c4b216ba0c1"
-					(reference "#PWR078")
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/57f9be64-7d5a-4747-94e4-9b3da2642f9a"
+					(reference "#PWR076")
 					(unit 1)
 				)
 			)
@@ -989,16 +856,16 @@
 	)
 	(symbol
 		(lib_id "Diode:BAT54S")
-		(at 125.095 83.82 0)
+		(at 137.16 69.85 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "bc709796-3943-4b39-9cb1-cc9f1a714e3c")
-		(property "Reference" "D21"
-			(at 125.095 78.105 0)
+		(uuid "471a8da8-1ca7-4a81-ae06-a8e2df2e9687")
+		(property "Reference" "D24"
+			(at 137.16 64.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1006,7 +873,7 @@
 			)
 		)
 		(property "Value" "BAT54S"
-			(at 125.095 80.645 0)
+			(at 137.16 66.675 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1014,7 +881,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 127 80.645 0)
+			(at 139.065 66.675 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1024,7 +891,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds11005.pdf"
-			(at 122.047 83.82 0)
+			(at 134.112 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1033,7 +900,7 @@
 			)
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
-			(at 125.095 83.82 0)
+			(at 137.16 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1042,18 +909,151 @@
 			)
 		)
 		(pin "1"
-			(uuid "15f2e89d-fc15-470a-964e-e502cef863f6")
+			(uuid "47ac82a1-65db-466d-8bab-c41e74f62938")
 		)
 		(pin "2"
-			(uuid "c6ae7664-8659-478c-824f-2efab0673e45")
+			(uuid "001403c1-4630-4e09-918f-65f4c4a36c61")
 		)
 		(pin "3"
-			(uuid "9b6566af-9b2f-4479-834c-17de7169922f")
+			(uuid "b5a4db39-0157-4ef0-83dd-ea17d69a0d0c")
 		)
 		(instances
 			(project "BOOSTV2"
-				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/83854842-4c14-4e3d-b9f8-9c4b216ba0c1"
-					(reference "D21")
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/57f9be64-7d5a-4747-94e4-9b3da2642f9a"
+					(reference "D24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 146.05 67.945 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9bd5985d-623b-42fd-9270-ab13333037de")
+		(property "Reference" "#PWR077"
+			(at 146.05 71.755 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 146.05 64.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 146.05 67.945 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 146.05 67.945 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 146.05 67.945 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b02b0593-67ac-4b26-a4e0-1866e14fbd67")
+		)
+		(instances
+			(project "BOOSTV2"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/57f9be64-7d5a-4747-94e4-9b3da2642f9a"
+					(reference "#PWR077")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 152.4 82.55 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9f621840-a3ab-47b3-a9ea-24f35738e1eb")
+		(property "Reference" "R46"
+			(at 152.4 76.2 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10"
+			(at 152.4 78.74 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 152.4 84.328 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 152.4 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 152.4 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ee80c411-ca13-4a9a-8f92-c47b83ee087a")
+		)
+		(pin "2"
+			(uuid "fc53f4ed-c564-442e-b732-5c2c8e22ea15")
+		)
+		(instances
+			(project "BOOSTV2"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450/57f9be64-7d5a-4747-94e4-9b3da2642f9a"
+					(reference "R46")
 					(unit 1)
 				)
 			)

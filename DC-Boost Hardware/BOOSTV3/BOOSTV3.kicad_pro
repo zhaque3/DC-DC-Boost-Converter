@@ -511,7 +511,7 @@
     ]
   },
   "meta": {
-    "filename": "BOOSTV2.kicad_pro",
+    "filename": "BOOSTV3.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -739,6 +739,18 @@
           "group_by": false,
           "label": "DK#",
           "name": "DK#",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Rating",
+          "name": "Rating",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "DK Link",
+          "name": "DK Link",
           "show": false
         }
       ],

@@ -6,7 +6,7 @@
 	(paper "A3")
 	(title_block
 		(title "Microcontroller")
-		(rev "V2")
+		(rev "V3")
 		(company "EcoCar")
 		(comment 1 "Designed by:  Zeeshan Haque")
 	)
@@ -7697,7 +7697,7 @@
 	)
 	(text "        V_{UVLO(F)} = (R2 + R3)/(R1 + R2 + R3) * V_{IN(UV)}\nV_{OVLO(F)} = R3/(R1 + R2 + R3) * V_{IN(OV)}\n\nV_{UVLO,F} from datasheet\n\n"
 		(exclude_from_sim no)
-		(at 175.26 275.59 0)
+		(at 175.895 275.59 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7873,7 +7873,7 @@
 	)
 	(text "LDO requires voltage drop of at least 1.3V\nMake undervoltage condition ~5V to ensure 3.3V V_{out} "
 		(exclude_from_sim no)
-		(at 234.315 274.955 0)
+		(at 236.22 276.225 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7912,17 +7912,6 @@
 			)
 		)
 		(uuid "96865dd5-7f69-491b-87d2-93f1ec77293d")
-	)
-	(text "ESD Protected CAN Tranciever\n"
-		(exclude_from_sim no)
-		(at 113.919 199.009 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9b2569df-6dcd-447f-8e8f-5545d38b4a3d")
 	)
 	(text "This IC features reverse polarity protection, current\nlimiting, UVLO and OVLO as well as a ~{FAULT} to detect\nfault conditions via an LED in our purpose."
 		(exclude_from_sim no)
@@ -8036,7 +8025,7 @@
 	)
 	(text "eFuses FLT Circuitry\n"
 		(exclude_from_sim no)
-		(at 287.655 150.495 0)
+		(at 290.83 146.05 0)
 		(effects
 			(font
 				(size 2.54 2.54)

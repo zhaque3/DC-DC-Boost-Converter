@@ -5,7 +5,7 @@
 	(uuid "a38a56f6-5b73-4309-9160-51c41502ff8e")
 	(paper "A4")
 	(title_block
-		(rev "V2")
+		(rev "V3")
 		(company "EcoCar")
 		(comment 1 "Designed by:  Zeeshan Haque")
 	)

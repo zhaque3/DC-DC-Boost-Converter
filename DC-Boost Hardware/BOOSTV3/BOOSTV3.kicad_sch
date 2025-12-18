@@ -6,11 +6,91 @@
 	(paper "A4")
 	(title_block
 		(title "DC-DC-Converter Root Page")
-		(rev "V2")
+		(rev "V3")
 		(company "EcoCar")
 		(comment 1 "Designed by:  Zeeshan Haque")
 	)
 	(lib_symbols
+		(symbol "Mechanical:Fiducial"
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "FID"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Fiducial"
+				(at 0 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Fiducial Marker"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "fiducial marker"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Fiducial*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Fiducial_0_1"
+				(circle
+					(center 0 0)
+					(radius 1.27)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Mechanical:MountingHole"
 			(pin_names
 				(offset 1.016)
@@ -197,6 +277,134 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
+		(at 57.785 191.77 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "10e7414f-a791-4cc1-8e85-798823e05adf")
+		(property "Reference" "H6"
+			(at 60.325 190.4999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 60.325 193.0399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.5mm"
+			(at 57.785 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 57.785 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 57.785 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "BOOSTV3"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
+					(reference "H6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:Fiducial")
+		(at 101.6 191.135 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4314d0fa-58d8-4fae-a1cc-6d32a5632d11")
+		(property "Reference" "FID2"
+			(at 104.775 189.8649 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 104.775 192.4049 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
+			(at 101.6 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 101.6 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 101.6 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "BOOSTV3"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
+					(reference "FID2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
 		(at 37.465 185.42 0)
 		(unit 1)
 		(exclude_from_sim yes)
@@ -260,17 +468,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 57.15 191.77 0)
+		(lib_id "Mechanical:Fiducial")
+		(at 132.08 191.135 0)
 		(unit 1)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "507166e6-2dad-4a2f-8838-2ffeea8760f8")
-		(property "Reference" "H6"
-			(at 59.69 190.4999 0)
+		(uuid "47d92d73-e483-4fbf-b527-e63fecf28dea")
+		(property "Reference" "FID4"
+			(at 135.255 189.8649 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -278,8 +486,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MountingHole"
-			(at 59.69 193.0399 0)
+		(property "Value" "Fiducial"
+			(at 135.255 192.4049 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -287,8 +495,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.5mm"
-			(at 57.15 191.77 0)
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
+			(at 132.08 191.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -297,7 +505,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 57.15 191.77 0)
+			(at 132.08 191.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -305,8 +513,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 57.15 191.77 0)
+		(property "Description" "Fiducial Marker"
+			(at 132.08 191.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -315,9 +523,9 @@
 			)
 		)
 		(instances
-			(project "BOOSTV2"
+			(project "BOOSTV3"
 				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
-					(reference "H6")
+					(reference "FID4")
 					(unit 1)
 				)
 			)
@@ -452,6 +660,70 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:Fiducial")
+		(at 149.225 191.135 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "68fc5e47-8503-49b7-9b1c-56c7edb32735")
+		(property "Reference" "FID5"
+			(at 152.4 189.8649 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 152.4 192.4049 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
+			(at 149.225 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 149.225 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 149.225 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "BOOSTV3"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
+					(reference "FID5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Mechanical:MountingHole")
 		(at 18.415 185.42 0)
 		(unit 1)
@@ -516,17 +788,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 57.15 185.42 0)
+		(lib_id "Mechanical:Fiducial")
+		(at 84.455 191.135 0)
 		(unit 1)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "ea98240b-cf03-44fa-94e6-c0d23c3748f0")
-		(property "Reference" "H5"
-			(at 59.69 184.1499 0)
+		(uuid "881ff3e4-8160-457d-ae2f-a736c4a977f1")
+		(property "Reference" "FID1"
+			(at 87.63 189.8649 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -534,8 +806,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MountingHole"
-			(at 59.69 186.6899 0)
+		(property "Value" "Fiducial"
+			(at 87.63 192.4049 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -543,8 +815,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.5mm"
-			(at 57.15 185.42 0)
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
+			(at 84.455 191.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -553,7 +825,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 57.15 185.42 0)
+			(at 84.455 191.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -561,8 +833,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 57.15 185.42 0)
+		(property "Description" "Fiducial Marker"
+			(at 84.455 191.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -571,9 +843,201 @@
 			)
 		)
 		(instances
-			(project "BOOSTV2"
+			(project "BOOSTV3"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
+					(reference "FID1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 57.785 185.42 0)
+		(unit 1)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "95d7de87-40e3-4ff6-a659-67d415e5470e")
+		(property "Reference" "H5"
+			(at 60.325 184.1499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 60.325 186.6899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.5mm"
+			(at 57.785 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 57.785 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 57.785 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "BOOSTV3"
 				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
 					(reference "H5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:Fiducial")
+		(at 116.205 191.135 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b4bce50e-5781-43d7-9477-2c1b28ad78a0")
+		(property "Reference" "FID3"
+			(at 119.38 189.8649 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 119.38 192.4049 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
+			(at 116.205 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 116.205 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 116.205 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "BOOSTV3"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
+					(reference "FID3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:Fiducial")
+		(at 163.83 191.135 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e3e5fa10-ae0b-453e-a89c-eb7d72dc5bba")
+		(property "Reference" "FID6"
+			(at 167.005 189.8649 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 167.005 192.4049 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
+			(at 163.83 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 163.83 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 163.83 191.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "BOOSTV3"
+				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
+					(reference "FID6")
 					(unit 1)
 				)
 			)
@@ -635,7 +1099,7 @@
 			)
 		)
 		(instances
-			(project "BOOSTV2"
+			(project "BOOSTV3"
 				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
 					(page "7")
 				)
@@ -739,7 +1203,7 @@
 			)
 		)
 		(instances
-			(project "BOOSTV2"
+			(project "BOOSTV3"
 				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
 					(page "3")
 				)
@@ -802,7 +1266,7 @@
 			)
 		)
 		(instances
-			(project "BOOSTV2"
+			(project "BOOSTV3"
 				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
 					(page "6")
 				)
@@ -886,7 +1350,7 @@
 			)
 		)
 		(instances
-			(project "BOOSTV2"
+			(project "BOOSTV3"
 				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
 					(page "5")
 				)
@@ -990,7 +1454,7 @@
 			)
 		)
 		(instances
-			(project "BOOSTV2"
+			(project "BOOSTV3"
 				(path "/892bc44b-f7f8-4677-bf53-06d5523b6450"
 					(page "2")
 				)
